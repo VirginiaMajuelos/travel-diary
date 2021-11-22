@@ -23,3 +23,6 @@ travelSchema.index({ location: '2dsphere' });
 const Travel = model("Travel", travelSchema);
 
 module.exports = Travel;
+
+//Modelo del contenido principal del lugar a visitar 
+//(Pza España, Giralda, Barrio Triana -Dentro de Sevilla)

@@ -1,7 +1,7 @@
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-    console.log("Travel-Diary JS imported successfully!");
+    console.log("Your-Road JS imported successfully!");
   },
   false
 );

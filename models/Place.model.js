@@ -2,9 +2,9 @@ const { Schema, model } = require("mongoose");
 
 const placeSchema = new Schema({
 
-    name: String,
-    description: String,
-    imagePlaceUrl: String,
+    name: String, // Api buscador place
+    description: String, // Api descripción
+    imagePlaceUrl: String, //Api imasea
 
   },
   {
@@ -16,3 +16,7 @@ const placeSchema = new Schema({
 const Place = model("Place", placeSchema);
 
 module.exports = Place;
+
+
+
+///// Modelo del lugar genérico dónde vamos a ir (SEVILLA)
