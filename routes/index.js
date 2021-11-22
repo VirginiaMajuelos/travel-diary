@@ -6,6 +6,9 @@ module.exports = app => {
 
   const authRoutes = require("./auth.routes");
   app.use("/auth", authRoutes);
+
+  const travelRoutes = require("./travel.routes");
+  app.use("/travel", travelRoutes);
 }
 
 //TO DO

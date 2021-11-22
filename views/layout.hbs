@@ -29,10 +29,10 @@
             <a class="nav-link" href="/">Inicio</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="/">Planifica tu viaje</a>
+            <a class="nav-link" href="/travel/marker">Planifica tu viaje</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="/">Colecciones</a>
+            <a class="nav-link" href="/travel/collections">Colecciones</a>
          </li>
    </div>
    <div class="d-flex">
@@ -44,12 +44,21 @@
 </nav>
 
       
-      <main>
+    
          {{{body}}}
-      </main>
+      
       
 
       <script src="/js/script.js"></script>
+      {{!-- <script src="/js/script.map.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=KEY"></script> --}}
+      <script async
+    src="https://maps.googleapis.com/maps/api/js?key=KEY&libraries=places&callback=initMap">
+</script>
    
    </body>
 
