@@ -1,10 +1,16 @@
 const pointSchema = new Schema({
 
-    pointsInt: [{ type: Schema.Types.ObjectId, ref: 'Travel'}], 
+    pointInt:{type: Schema.Types.ObjectId, ref: 'Place'},
     comments: String, 
     tips: String,
     date: Date,
-    imageUrl: String
+    imageUrl: String,
+
+    location: {
+      type: {
+        type: String
+    },
+    coordinates: [Number]}
 
   },
   {
