@@ -5,16 +5,20 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      unique: true //-> Ideally, should be unique, but its up to you
+      unique: true, //-> Ideally, should be unique, but its up to you
+      required  : [ true, 'El correo es necesario' ], 
     },
     password: String,
     role: {
     type: String,
     enum: ['TRAVELLER', 'GUEST', 'ADMIN'],
     default: 'TRAVELLER',
+    username: String,
+    imageUrl: String,
+    description: String,
+    travelVisited:[{type: Schema.Types.ObjectId, ref: 'Place'}] 
   }
   },
-  
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
