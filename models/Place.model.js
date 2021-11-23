@@ -1,19 +1,9 @@
 const { Schema, model } = require("mongoose");
 const placeSchema = new Schema({
-<<<<<<< HEAD
-  
-    destination: String, // Api buscador place
-    description: String, // Api descripción
-    imagePlaceUrl: String, //Api imasea
-
-    pointsInt: [String], // sitios de interés que quieres visitar
-    
-=======
     destination: String, // Api buscador place
     description: String, // Api descripción
     imagePlaceUrl: String, //Api imasea
     pointsInt: [String], // sitios de interés que quieres visitar
->>>>>>> virginia
     location: {
       type: {
         type: String
