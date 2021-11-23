@@ -1,6 +1,11 @@
+const { Schema, model } = require("mongoose");
 const pointSchema = new Schema({
 
-    pointInt:{type: Schema.Types.ObjectId, ref: 'Place'},
+    placeID: {
+      type: Schema.Types.ObjectId, ref: 'Place'
+    },
+    
+    name: String,
     comments: String, 
     tips: String,
     date: Date,
