@@ -2,6 +2,7 @@ const router = require("express").Router()
 const bcrypt = require('bcrypt')
 const Place = require("../models/Place.model")
 
+
 /// crear collections
 router.get('/collections', (req, res) => {
   Place.find()
@@ -14,8 +15,10 @@ router.get('/collections', (req, res) => {
 router.post("/collections", (req, res) => {
   const {destination, description}= req.body
 
+
+  console.log(placeAPI)
   //5. Realizar las operaciones en la BBDD o la lógica de negocio
-  Place.create({ destination, description })
+  Place.create({ destination, description, imagePlaceUr })
     //6. Decidir que vista vamos a renderizar
     .then(newPlace => res.render("place/travel-marker", newPlace))
     .catch(err => console.log(err))
