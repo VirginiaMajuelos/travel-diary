@@ -46,6 +46,7 @@ router.post('/login', (req, res) => {
         res.render('auth/login', { errorMsg: 'Contraseña incorrecta' })
         return
       }
+      console.log(" Este es mi user: " + user)
       req.session.currentUser = user
       res.redirect('/')
     })

@@ -14,12 +14,12 @@ const userSchema = new Schema(
     enum: ['TRAVELLER', 'GUEST', 'ADMIN'],
     default: 'TRAVELLER',
     required: true,
-  },
+    },
     username: String,
     imageUrl: String,
     description: String,
     travelVisited:[{type: Schema.Types.ObjectId, ref: 'Place'}] 
- 
+  
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
