@@ -19,7 +19,7 @@ const imagePlace =
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
-require("./config/session.config.js")(app)
+require("./config/session.config.js")(app);
 
 // default value for title local
 const projectName = "Your-Road";

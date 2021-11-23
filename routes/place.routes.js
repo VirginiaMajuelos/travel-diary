@@ -5,6 +5,7 @@ const APIHandler =  require("./../services/APIHandler")
 const API = new APIHandler()
 
 
+
 /// crear collections
 router.get('/collections', (req, res) => {
 
@@ -40,13 +41,12 @@ router.post("/collections", (req, res) => {
     .getPlacePictures(destination)
     .then(data => {
       const imagePlaceUrl =  data.data.results[0]
-
-      Place.create({ destination, description, imagePlaceUrl })
-      //6. Decidir que vista vamos a renderizar
-      .then(newPlace => res.render("place/travel-marker", newPlace))
-      .catch(err => console.log(err))
+      //5. Realizar las operaciones en la BBDD o la lógica de negocio
+      Place.create({ destination, description, imagePlaceUr })
+        //6. Decidir que vista vamos a renderizar
+        .then(newPlace => res.render("place/travel-marker", newPlace))
+        .catch(err => console.log(err))
     })
-    .catch(err => console.log(err))
 
   // 5. Realizar las operaciones en la BBDD o la lógica de negocio
   // Place.create({ destination, description, imagePlaceUrl })
@@ -55,7 +55,6 @@ router.post("/collections", (req, res) => {
   //   .catch(err => console.log(err))
 
 })
-
 
 // ///api imagenes
 

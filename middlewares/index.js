@@ -12,6 +12,6 @@ module.exports = {
 
 
 
-//chequear si están logueados y si están el rol correcto
-//Revisar bien los campos y vistas
-//TO DO
+// chequear si están logueados y si están el rol correcto
+// Revisar bien los campos y vistas
+// TO DO
