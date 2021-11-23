@@ -18,6 +18,11 @@
             </form>
              
             <p>Lista de viajes:</p>
+            <ul>
+              {{#each allPlaces}}
+              <li value="{{id}}">{{destination}}</li>
+              {{/each}}
+            </ul>
         </div>
        
 
