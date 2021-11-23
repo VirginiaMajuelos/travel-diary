@@ -19,23 +19,13 @@ const placeSchema = new Schema({
         type: String
     },
     coordinates: [Number]} // Este apunto al centro del place - lugar de destino
-<<<<<<< HEAD
-
-=======
->>>>>>> virginia
   },
   {
 //valida los cambios realizados
     timestamps: true,
   }
 );
-<<<<<<< HEAD
-
-travelSchema.index({ location: '2dsphere' });
-
-=======
 placeSchema.index({ location: '2dsphere' });
->>>>>>> virginia
 const Place = model("Place", placeSchema);
 module.exports = Place;
 ///// Modelo del lugar genérico dónde vamos a ir (SEVILLA)
