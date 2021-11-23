@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const bcrypt = require('bcrypt')
 const Place = require("../models/Place.model")
+const Point = require("../models/Point.model")
 const APIHandler =  require("./../services/APIHandler")
 const API = new APIHandler()
 
@@ -42,9 +43,12 @@ router.post("/collections", (req, res) => {
     .then(data => {
       const imagePlaceUrl =  data.data.results[0]
       //5. Realizar las operaciones en la BBDD o la lógica de negocio
-      Place.create({ destination, description, imagePlaceUr })
+      Place.create({ destination, description, imagePlaceUrl })
         //6. Decidir que vista vamos a renderizar
-        .then(newPlace => res.render("place/travel-marker", newPlace))
+        .then(newPlace => 
+          res.redirect(`/place/marker/edit/${newPlace._id}`)
+          //res.render("place/travel-marker", newPlace)
+          )
         .catch(err => console.log(err))
     })
 
@@ -73,27 +77,57 @@ router.post("/collections", (req, res) => {
 router.get('/marker', (req, res) => res.render('place/travel-marker'))
 //// Editar:
 
-router.get("/place/marker/edit/:id", (req, res) => {
-  const { id } = req.body
+router.get("/marker/edit/:place_id", (req, res) => {
+  const id = req.params.place_id
 
   Place.findById(id)
-    .then(ediPoint => { res.render('/place/travel-edit', {id})
+    .then(thePlace => { res.render('place/travel-edit', {thePlace})
+    
     })
     .catch(err => console.log(err))
+
 })
 
-router.post("/place/marker/edit/:id", (req, res) => {
-  const { id, place1, place2, place3 } = req.body
+router.post("/marker/edit/:place_id", (req, res) => {
+  const id = req.params.place_id
+  const { pointsInt } = req.body
+
+
+  let promiseArr = []
+
+  pointsInt.forEach(point => {
+    const promise = Point.create({name: point, placeID: id})
+    promiseArr.push(promise)
+  })
+
   
+  Promise.all(promiseArr)
+  .then(allPoints => {
+    console.log(promiseArr)
+    console.log(id)
 
-  Place.findByIdAndUpdate(id,  { place1, place2, place3 }, { new: true })
-    .then(editTravel => {
-      res.redirect("/")
+
+    Place.findById(id)
+    .then((thePlace) =>{ 
+      res.render('place/travel-edit', {allPoints, thePlace})
     })
     .catch(err => console.log(err))
+  })
+  .catch(err => console.log(err))
+    
+  })
+
+ 
+  // // Place.findByIdAndUpdate(id,  { pointsInt }, { new: true })
+  // Place.findByIdAndUpdate(id,  { $push: { pointsInt } }, { new: true })
+  //   .then(editTravel => {
+      
+  //     // buscais todos los points cuyo pointsint sea el id del lugar que estais editando
+    
+  //   })
+  //   .catch(err => console.log(err))
 
 
-})
 
 ///mapa
 router.get("/api", (req, res) => {

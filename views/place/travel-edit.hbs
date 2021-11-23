@@ -1,1 +1,46 @@
-<h1> Editaaaaaaa </h1>
+
+<h1 style="color: rgb(0, 0, 0);">Planifica tu viaje a {{{thePlace.destination}}}</h1>
+
+<div class="container">
+    <div class="row">
+
+        <div class="list-group col-6 ">
+            <form action="/place/marker/edit/{{thePlace.id}}" method="POST">
+                <ul>
+                    <li>
+                        <input type="text" name="pointsInt" placeholder="Primera parada">
+                    </li><br>
+                    <li>
+                        <input type="text" name="pointsInt" placeholder="Segunda parada">
+                    </li><br>
+                    <li>
+                        <input type="text" name="pointsInt" placeholder="Tercera parada">
+                    </li><br>
+                    <li>Pedir ayuda para coloca aqui un añadir "+"</li><br>
+                </ul>
+                <input type="submit" value="Guardar Viaje">
+               
+        </div>
+        <h2>Sitios a visitar:</h2>
+        
+        <ul>
+            {{#each allPoints}}
+            <li><a href="/{{id}}">{{name}}</li>
+            {{/each}}
+        </ul>
+      
+        {{!-- <h1>Create Place</h1>
+        <form action="/places/create" method="post">
+            <label for="">
+                Name :
+                <input type="text" name="name" placeholder="Name of the place" />
+            </label>
+            <button type="submit">Create Place</button>
+        </form> --}}
+{{!-- 
+    <div class="col-6" id="map"></div> --}}
+<a href="/place/collections">Back</a>
+    </div>
+
+</div>
+</form>
