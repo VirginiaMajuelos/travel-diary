@@ -42,7 +42,7 @@ router.post("/collections", (req, res) => {
     .then(data => {
       const imagePlaceUrl =  data.data.results[0]
       //5. Realizar las operaciones en la BBDD o la lógica de negocio
-      Place.create({ destination, description, imagePlaceUr })
+      Place.create({ destination, description, imagePlaceUrl })
         //6. Decidir que vista vamos a renderizar
         .then(newPlace => res.render("place/travel-marker", newPlace))
         .catch(err => console.log(err))
@@ -68,33 +68,30 @@ router.post("/collections", (req, res) => {
 
 
 
-
-
-router.get('/marker', (req, res) => res.render('place/travel-marker'))
 //// Editar:
 
-router.get("/place/marker/edit/:id", (req, res) => {
-  const { id } = req.body
-
+router.get("/marker/edit/:place_id", (req, res) => {
+  const id = req.params.place_id
   Place.findById(id)
-    .then(ediPoint => { res.render('/place/travel-edit', {id})
+    .then(ediPoint => { res.render('place/travel-edit', ediPoint )
     })
     .catch(err => console.log(err))
 })
 
-router.post("/place/marker/edit/:id", (req, res) => {
-  const { id, place1, place2, place3 } = req.body
-  
+router.post("/marker/edit/:place_id", (req, res) => {
+  const id = req.params.place_id
+  const { place1, place2, place3} = req.body
+  console.log(req.body)
 
-  Place.findByIdAndUpdate(id,  { place1, place2, place3 }, { new: true })
+  Place.findByIdAndUpdate(id, {pointsInt}, { new: true })
     .then(editTravel => {
-      res.redirect("/")
+      res.redirect("/place/travel-marker")
     })
     .catch(err => console.log(err))
 
 
 })
-
+router.get('/marker', (req, res) => res.render('place/travel-marker'))
 ///mapa
 router.get("/api", (req, res) => {
   Places.find()

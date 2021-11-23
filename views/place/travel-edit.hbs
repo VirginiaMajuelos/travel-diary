@@ -1,1 +1,38 @@
-<h1> Editaaaaaaa </h1>
+<h1 style="color: rgb(0, 0, 0);">Planifica tu viaje {{destination}}</h1>
+
+<div class="container">
+    <div class="row">
+
+        <div class="list-group col-6 ">
+            <p>Editar</p>
+        <form action="/marker/edit/{{id}}" method="POST">
+            <ul >
+                <li>
+                <input type="text" name="place1" placeholder="Primera parada">        
+                </li>
+                <li>
+                <input type="text" name="place2" placeholder="Primera segunda">        
+                </li>
+                <li>
+                <input type="text" name="place3" placeholder="Primera tercera">        
+                </li>
+                <li>Pedir ayuda para coloca aqui un añadir "+"</li>
+            </ul>
+            <input type="submit" value="Guardar Viaje">
+        {{!-- </div>
+        <h1>Create Place</h1>
+            <form action="/places/create" method="P">
+            <label for="">
+                Name :
+                <input type="text" name="name" placeholder="Name of the place" />
+            </label>
+            <button type="submit">Create Place</button>
+            </form>
+        <div class="col-6" id="map"></div> --}}
+           
+        
+
+     </div>
+
+  </div>
+</form>
