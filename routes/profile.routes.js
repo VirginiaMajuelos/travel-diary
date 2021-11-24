@@ -16,8 +16,4 @@ router.get('/', (req, res) => {
 /// EDIT PROFILE
 
 
-<<<<<<< HEAD
 module.exports = router;
-=======
-module.exports = router;
->>>>>>> 1e6e6be53517ba90e90a72844ba43cabd80cd9a9
