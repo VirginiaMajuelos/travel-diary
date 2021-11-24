@@ -10,7 +10,7 @@ a {
   color: #00b7ff;
 }
 
-h1 {
+.inicio {
   color: white;
   padding: 20px;
 }
@@ -28,13 +28,12 @@ p {
   padding: 0;
 }
 
-.main-page{
+.main-page {
   margin-top: 200px;
-
 }
 
 #map {
-  width:100%;
+  width: 100%;
   height: 400px;
 }
 
@@ -52,6 +51,9 @@ p {
   }
 }
 
+.image-point {
+  width: 100%;
+}
 
 /* background animate.
 
