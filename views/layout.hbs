@@ -31,15 +31,14 @@
          <li class="nav-item">
             <a class="nav-link" href="/place/collections">Colecciones</a>
          </li>
-         <li class="nav-item">
-            <a class="nav-link" href="/place/marker">Planifica tu viaje</a>
-         </li>
+
    </div>
    <div class="d-flex">
       <form class="container-fluid justify-content-start">
          <a class="btn btn-outline-dark me-2" href="/auth/signup">Signup</a>
          <a class="btn btn-outline-dark me-2" href="/auth/login">Login</a>
          <a class="btn btn-outline-dark me-2" href="/auth/logout">Logout</a>
+         <a class="btn btn-outline-dark me-2" href="/profile/{{id}}">Profile</a>
       </form>
    </div>
 </nav>
@@ -49,15 +48,18 @@
  {{!-- <footer>@Copyright Vir y Eunice</footer>      --}}
 
       <script src="/js/script.js"></script>
-      <script src="/js/test-map.js"></script>
-      {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAICYq53mhG-p6dtCNFn6EoYnjYPO1UOFY&libraries=places&callback=initMap"></script> --}}
-      <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAICYq53mhG-p6dtCNFn6EoYnjYPO1UOFY&libraries=places&callback=initMap">
+      <script src="/js/script.map.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+   
+      {{!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
+      {{!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAICYq53mhG-p6dtCNFn6EoYnjYPO1UOFY&libraries=places&callback=initMap"></script> --}} 
+      <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAICYq53mhG-p6dtCNFn6EoYnjYPO1UOFY&callback=initMap" async defer></script>
+      
 </script>
    
    </body>
 
 </html>
+
+

@@ -1,5 +1,5 @@
 
-<h1 style="color: rgb(0, 0, 0);">Planifica tu viaje a {{{thePlace.destination}}}</h1>
+<h1>Planifica tu viaje a {{{thePlace.destination}}}</h1>
 
 <div class="container">
     <div class="row">
@@ -8,15 +8,14 @@
             <form action="/place/marker/edit/{{thePlace.id}}" method="POST">
                 <ul>
                     <li>
-                        <input type="text" name="pointsInt" placeholder="Primera parada">
+                        <input id="searchInput" class="controls" type="text" name="pointsInt" placeholder="Primera parada">
                     </li><br>
-                    <li>
+                    {{!-- <li>
                         <input type="text" name="pointsInt" placeholder="Segunda parada">
                     </li><br>
                     <li>
                         <input type="text" name="pointsInt" placeholder="Tercera parada">
-                    </li><br>
-                    <li>Pedir ayuda para coloca aqui un añadir "+"</li><br>
+                    </li><br> --}}
                 </ul>
                 <input type="submit" value="Guardar Viaje">
                
@@ -24,23 +23,23 @@
         <h2>Sitios a visitar:</h2>
         
         <ul>
-            {{#each allPoints}}
-            <li><a href="/{{id}}">{{name}}</li>
+            {{#each thePoints}}
+            <li><a href="/point/details/edit/{{id}}">{{name}}
+            <a href="/point/details/delete/{{id}}"><img src="/images/58326.png" width="20px"> </a></li>
             {{/each}}
         </ul>
       
-        {{!-- <h1>Create Place</h1>
-        <form action="/places/create" method="post">
-            <label for="">
-                Name :
-                <input type="text" name="name" placeholder="Name of the place" />
-            </label>
-            <button type="submit">Create Place</button>
-        </form> --}}
-{{!-- 
-    <div class="col-6" id="map"></div> --}}
+{{!-- ///////////Entrada de búsqueda  --}}
+ 
+
+        {{!-- <! - Mapa de Google -> --}}
+            <div id="map" class="{{thePlace.destination}}" data-points="{{#each thePoints}}{{name}}/{{/each}}"> </div>
+
+            {{!-- <! - Mostrar datos de geolocalización -> --}}
+           
 <a href="/place/collections">Back</a>
     </div>
 
 </div>
 </form>
+

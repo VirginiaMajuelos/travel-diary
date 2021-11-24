@@ -1,115 +1,109 @@
+function initMap() {
+    let map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 43.8525872, lng: -12.8611109},
+      zoom: 12
+    });
+    let input = document.getElementById('searchInput');
 
-/// nO ESTA SIENDO UTILIZADO
-var geocoder;
-var map;
-var marker;
+    let autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
 
-/*
- * Google Map with marker
- */
-function initialize() {
-    var initialLat = $('.search_latitude').val();
-    var initialLong = $('.search_longitude').val();
-    initialLat = initialLat?initialLat:36.169648;
-    initialLong = initialLong?initialLong:-115.141000;
-
-    var latlng = new google.maps.LatLng(initialLat, initialLong);
-    var options = {
-        zoom: 16,
-        center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    map = new google.maps.Map(document.getElementById("geomap"), options);
-
-    geocoder = new google.maps.Geocoder();
-
-    marker = new google.maps.Marker({
+    let infowindow = new google.maps.InfoWindow();
+    let marker = new google.maps.Marker({
         map: map,
-        draggable: true,
-        position: latlng
+        anchorPoint: new google.maps.Point(0, -29)
     });
 
-    google.maps.event.addListener(marker, "dragend", function () {
-        var point = marker.getPosition();
-        map.panTo(point);
-        geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
-                marker.setPosition(results[0].geometry.location);
-                $('.search_addr').val(results[0].formatted_address);
-                $('.search_latitude').val(marker.getPosition().lat());
-                $('.search_longitude').val(marker.getPosition().lng());
-            }
+
+    const geocoder = new google.maps.Geocoder()
+
+    function codeAddress() {
+
+    const mapTest = document.getElementById('map')
+    const destination = mapTest.className
+    const points = mapTest.dataset.points.split('/')
+    points.pop()
+
+    geocoder.geocode( { 'address': destination}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            let marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+
+    points.forEach(point => {
+        geocoder.geocode( { 'address': point}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            let marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
         });
+        
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
     });
+    })
+  }
 
+  codeAddress()
+
+    autocomplete.addListener('place_changed', function() {
+        infowindow.close();
+        marker.setVisible(false);
+        let place = autocomplete.getPlace();
+        if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+        }
+  
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+        }
+        marker.setIcon(({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+    
+        let address = '';
+        if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+    
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        infowindow.open(map, marker);
+      
+        // Location details
+        for (let i = 0; i < place.address_components.length; i++) {
+            if(place.address_components[i].types[0] == 'postal_code'){
+                document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+            }
+            if(place.address_components[i].types[0] == 'country'){
+                document.getElementById('country').innerHTML = place.address_components[i].long_name;
+            }
+        }
+        document.getElementById('location').innerHTML = place.formatted_address;
+        document.getElementById('lat').innerHTML = place.geometry.location.lat();
+        document.getElementById('lon').innerHTML = place.geometry.location.lng();
+    });
 }
-
-$(document).ready(function () {
-    //load google map
-    initialize();
-    
-    /*
-     * autocomplete location search
-     */
-    var PostCodeid = '#search_location';
-    $(function () {
-        $(PostCodeid).autocomplete({
-            source: function (request, response) {
-                geocoder.geocode({
-                    'address': request.term
-                }, function (results, status) {
-                    response($.map(results, function (item) {
-                        return {
-                            label: item.formatted_address,
-                            value: item.formatted_address,
-                            lat: item.geometry.location.lat(),
-                            lon: item.geometry.location.lng()
-                        };
-                    }));
-                });
-            },
-            select: function (event, ui) {
-                $('.search_addr').val(ui.item.value);
-                $('.search_latitude').val(ui.item.lat);
-                $('.search_longitude').val(ui.item.lon);
-                var latlng = new google.maps.LatLng(ui.item.lat, ui.item.lon);
-                marker.setPosition(latlng);
-                initialize();
-            }
-        });
-    });
-    
-    /*
-     * Point location on google map
-     */
-    $('.get_map').click(function (e) {
-        var address = $(PostCodeid).val();
-        geocoder.geocode({'address': address}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
-                marker.setPosition(results[0].geometry.location);
-                $('.search_addr').val(results[0].formatted_address);
-                $('.search_latitude').val(marker.getPosition().lat());
-                $('.search_longitude').val(marker.getPosition().lng());
-            } else {
-                alert("Geocode was not successful for the following reason: " + status);
-            }
-        });
-        e.preventDefault();
-    });
-
-    //Add listener to marker for reverse geocoding
-    google.maps.event.addListener(marker, 'drag', function () {
-        geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                    $('.search_addr').val(results[0].formatted_address);
-                    $('.search_latitude').val(marker.getPosition().lat());
-                    $('.search_longitude').val(marker.getPosition().lng());
-                }
-            }
-        });
-    });
-});

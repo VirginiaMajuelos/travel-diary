@@ -9,6 +9,13 @@ module.exports = app => {
 
   const placeRoutes = require("./place.routes");
   app.use("/place", placeRoutes);
+
+  const pointRoutes = require("./point.routes");
+  app.use("/point", pointRoutes);
+
+  const profileRoutes = require("./profile.routes");
+  app.use("/profile", profileRoutes);
+
 }
 
 //TO DO

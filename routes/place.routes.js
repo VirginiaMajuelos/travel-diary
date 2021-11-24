@@ -2,6 +2,7 @@ const router = require("express").Router()
 const bcrypt = require('bcrypt')
 const Place = require("../models/Place.model")
 const Point = require("../models/Point.model")
+const axios = require('axios');
 const APIHandler =  require("./../services/APIHandler")
 const API = new APIHandler()
 
@@ -78,7 +79,14 @@ router.get("/marker/edit/:place_id", (req, res) => {
   const id = req.params.place_id
 
   Place.findById(id)
-    .then(thePlace => { res.render('place/travel-edit', {thePlace})
+    .then(thePlace => { 
+
+      Point.find({ placeID: id })
+      .then(thePoints => {
+          
+              res.render('place/travel-edit', {thePlace, thePoints}) 
+      })
+       .catch(err => console.log(err))
     
     })
     .catch(err => console.log(err))
@@ -89,26 +97,19 @@ router.post("/marker/edit/:place_id", (req, res) => {
   const id = req.params.place_id
   const { pointsInt } = req.body
 
+  //let promiseArr = []
 
-  let promiseArr = []
+  // pointsInt.forEach(point => {
+  //   const promise = Point.create({name: point, placeID: id})
+  //   promiseArr.push(promise)
+    
+  // })
 
-  pointsInt.forEach(point => {
-    const promise = Point.create({name: point, placeID: id})
-    promiseArr.push(promise)
-  })
-
+  Point.create({name: pointsInt, placeID: id})
   
-  Promise.all(promiseArr)
-  .then(allPoints => {
-    console.log(promiseArr)
-    console.log(id)
-
-
-    Place.findById(id)
-    .then((thePlace) =>{ 
-      res.render('place/travel-edit', {allPoints, thePlace})
-    })
-    .catch(err => console.log(err))
+  //Promise.all(promiseArr)
+  .then(thePoints => {
+    res.redirect(`/place/marker/edit/${id}`)
   })
   .catch(err => console.log(err))
     
@@ -135,6 +136,13 @@ router.get("/api", (req, res) => {
 });
 
 
+  //// Delete
 
+    router.get("/marker/delete/:id", (req, res) =>{
+        const { id } = req.params;
+        Place.findByIdAndRemove(id)
+        .then(() =>{res.redirect("/")
+        })
+    });
 
 module.exports = router;
