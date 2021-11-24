@@ -1,6 +1,7 @@
 module.exports = app => {
 
   // Base routes
+
   const baseRoutes = require("./base.routes");
   app.use("/", baseRoutes);
 
@@ -9,6 +10,10 @@ module.exports = app => {
 
   const placeRoutes = require("./place.routes");
   app.use("/place", placeRoutes);
+
+  const profileRoutes = require("./profile.routes");
+  app.use("/profile", profileRoutes);
+
 }
 
 //TO DO
