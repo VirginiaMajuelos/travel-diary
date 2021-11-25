@@ -4,6 +4,11 @@ const placeSchema = new Schema({
     destination: String, // Api buscador place
     description: String, // Api descripción
     imagePlaceUrl: String, //Api imasea
+
+    isOwner: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
     
     location: {
       type: {

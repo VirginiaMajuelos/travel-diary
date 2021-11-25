@@ -18,7 +18,6 @@ const userSchema = new Schema(
     username: String,
     imageUrl: String,
     description: String,
-    travelVisited:[{type: Schema.Types.ObjectId, ref: 'Place'}] 
   
   },
   {

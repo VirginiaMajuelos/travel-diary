@@ -3,38 +3,25 @@ const bcrypt = require('bcrypt')
 const Place = require("../models/Place.model")
 const Point = require("../models/Point.model")
 const axios = require('axios');
-const APIHandler =  require("./../services/APIHandler")
+const { isLoggedIn, checkRoles } = require("../middlewares")
+const APIHandler =  require("./../services/APIHandler");
 const API = new APIHandler()
 
 
 
-/// crear collections
-router.get('/collections', (req, res) => {
+/// ver collections
+router.get('/collections', isLoggedIn, (req, res, next) => {
 
-  // const placePictures = API.getPlacePictures('granada')
-  // const allPlaces = Place.find()
+const currentUserId = req.session.currentUser._id
 
-  // Promise.all([placePictures, allPlaces])
-  //   .then(data => {
-  //     const [placePictures, allPlaces] = data
-  //     const firstPicture = placePictures.data.results[0]
-
-  //     res.render('place/collections', { allPlaces, firstPicture })
-
-  //   })
-
-  // API
-  //   .getPlacePicture('granada')
-  //   .then(data => {
-  //     console.log('-----------------------------',data.data.results[0])
-  //   })
-
-  Place.find()
+  Place.find({isOwner: currentUserId })
     .then(allPlaces => {
       res.render('place/collections', { allPlaces })
     })
     .catch(err => console.log(err))
 }),
+
+//crear colección
 
 router.post("/collections", (req, res) => {
   const {destination, description} = req.body
@@ -43,34 +30,17 @@ router.post("/collections", (req, res) => {
     .getPlacePictures(destination)
     .then(data => {
       const imagePlaceUrl =  data.data.results[0]
-      //5. Realizar las operaciones en la BBDD o la lógica de negocio
-      Place.create({ destination, description, imagePlaceUrl })
-        //6. Decidir que vista vamos a renderizar
-        .then(newPlace => 
+
+      Place.create({ destination, description, imagePlaceUrl, isOwner: req.session.currentUser._id})
+
+      .then(newPlace => 
           res.redirect(`/place/marker/edit/${newPlace._id}`)
-          //res.render("place/travel-marker", newPlace)
+         
           )
         .catch(err => console.log(err))
     })
 
-  // 5. Realizar las operaciones en la BBDD o la lógica de negocio
-  // Place.create({ destination, description, imagePlaceUrl })
-  //   6. Decidir que vista vamos a renderizar
-  //   .then(newPlace => res.render("place/travel-marker", newPlace))
-  //   .catch(err => console.log(err))
-
 })
-
-// ///api imagenes
-
-// router.get('/collections', (req,res) => {
-//   Place.find(ImseaAPIimages)
-//   .then(allImages => {
-//     res.render('place/collections', {allImages})
-//   })
-//   .catch(err => console.log(err))
-// })
-
 
 
 //// Editar:
@@ -93,17 +63,9 @@ router.get("/marker/edit/:place_id", (req, res) => {
 
 })
 
-router.post("/marker/edit/:place_id", (req, res) => {
+router.post("/marker/edit/:place_id", isLoggedIn, (req, res) => {
   const id = req.params.place_id
   const { pointsInt } = req.body
-
-  //let promiseArr = []
-
-  // pointsInt.forEach(point => {
-  //   const promise = Point.create({name: point, placeID: id})
-  //   promiseArr.push(promise)
-    
-  // })
 
   Point.create({name: pointsInt, placeID: id})
   
@@ -116,16 +78,6 @@ router.post("/marker/edit/:place_id", (req, res) => {
   })
 
  
-  // // Place.findByIdAndUpdate(id,  { pointsInt }, { new: true })
-  // Place.findByIdAndUpdate(id,  { $push: { pointsInt } }, { new: true })
-  //   .then(editTravel => {
-      
-  //     // buscais todos los points cuyo pointsint sea el id del lugar que estais editando
-    
-  //   })
-  //   .catch(err => console.log(err))
-
-
 ///mapa
 router.get("/api", (req, res) => {
   Places.find()

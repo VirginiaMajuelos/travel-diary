@@ -17,6 +17,9 @@ module.exports = app => {
   const profileRoutes = require("./profile.routes");
   app.use("/profile", profileRoutes);
 
+  const userRoutes = require("./user.routes");
+  app.use("/", userRoutes);
+
 }
 
 //TO DO
