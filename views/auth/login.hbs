@@ -21,6 +21,10 @@
             {{/if}}
             <hr>
             <p>¿No estás registrad@?    <a href="/auth/signup">Hazlo ahora</a>.</p>
+
+            {{#if errorMessage}}
+            <p class="error">{{errorMessage}}</p>
+            {{/if}}
         </div>
     </div>
 </div>

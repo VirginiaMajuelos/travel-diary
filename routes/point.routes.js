@@ -1,6 +1,6 @@
 const router = require("express").Router()
-const Place = require("../models/Place.model")
 const Point = require("../models/Point.model")
+const { isLoggedIn, checkRoles, isOwn } = require("../middlewares")
 const fileUploader = require("../config/cloudinary.config")
 /// Detalles point
 

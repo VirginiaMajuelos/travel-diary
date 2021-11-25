@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const bcrypt = require('bcrypt')
+const { isLoggedIn, checkRoles, isOwn } = require("../middlewares")
 const User = require("../models/User.model")
 
 // Signup
@@ -27,6 +28,7 @@ router.post('/signup', (req, res) => {
     })
     .catch(err => console.log(err))
 })
+
 // Login
 router.get('/login', (req, res) => res.render('auth/login'))
 router.post('/login', (req, res) => {
@@ -46,8 +48,8 @@ router.post('/login', (req, res) => {
         res.render('auth/login', { errorMsg: 'Contraseña incorrecta' })
         return
       }
-      console.log(" Este es mi user: " + user)
       req.session.currentUser = user
+      req.app.locals.user = req.session.currentUser;
       res.redirect('/')
     })
     .catch(err => console.log(err))
