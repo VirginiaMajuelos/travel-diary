@@ -2,6 +2,7 @@ const router = require("express").Router()
 const Point = require("../models/Point.model")
 const { isLoggedIn, checkRoles, isOwn } = require("../middlewares")
 const fileUploader = require("../config/cloudinary.config")
+const { isLoggedIn, checkRoles } = require("../middlewares")
 /// Detalles point
 
 router.get('/details/edit/:id', (req, res) => {

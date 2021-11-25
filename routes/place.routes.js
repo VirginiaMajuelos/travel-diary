@@ -63,10 +63,9 @@ router.get("/marker/edit/:place_id", (req, res) => {
 
 })
 
-router.post("/marker/edit/:place_id", (req, res) => {
+router.post("/marker/edit/:place_id", isLoggedIn, (req, res) => {
   const id = req.params.place_id
   const { pointsInt } = req.body
-
 
   Point.create({name: pointsInt, placeID: id})
   
@@ -78,8 +77,7 @@ router.post("/marker/edit/:place_id", (req, res) => {
     
   })
 
-
-
+ 
 ///mapa
 router.get("/api", (req, res) => {
   Places.find()
