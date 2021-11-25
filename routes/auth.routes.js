@@ -2,7 +2,6 @@ const router = require("express").Router()
 const bcrypt = require('bcrypt')
 const { isLoggedIn, checkRoles, isOwn } = require("../middlewares")
 const User = require("../models/User.model")
-const { isLoggedIn, checkRoles } = require("../middlewares")
 
 // Signup
 router.get('/signup', (req, res) => res.render('auth/signup'))
