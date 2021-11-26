@@ -26,10 +26,12 @@ function initMap() {
 
     geocoder.geocode( { 'address': destination}, function(results, status) {
         if (status == 'OK') {
+            
             map.setCenter(results[0].geometry.location);
             let marker = new google.maps.Marker({
                 map: map,
-                position: results[0].geometry.location
+                position: results[0].geometry.location,
+                title: "Centro"
             });
             
         } else {
@@ -38,13 +40,32 @@ function initMap() {
     });
 
     points.forEach(point => {
+      
+        const contentString =`<div id="content">${point}</div>`;
+
+         const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });
+
+
         geocoder.geocode( { 'address': point}, function(results, status) {
         if (status == 'OK') {
+        console.log(results[0])
+
             map.setCenter(results[0].geometry.location);
             let marker = new google.maps.Marker({
                 map: map,
-                position: results[0].geometry.location
+                position: results[0].geometry.location,
+                title: results[0].formatted_address
         });
+
+          marker.addListener("click", () => {
+            infowindow.open({
+                anchor: marker,
+                map,
+                shouldFocus: false,
+            });
+        })
         
       } else {
         alert('Geocode was not successful for the following reason: ' + status);

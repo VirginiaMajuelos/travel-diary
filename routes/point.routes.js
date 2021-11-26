@@ -27,7 +27,7 @@ router.post("/details/edit/:id", fileUploader.single('imageUrl'), (req, res) => 
 
   .then(DetailsPoint => {
       console.log(DetailsPoint)
-      res.redirect("/")
+      res.redirect(`/point/details/edit/${id}`)
     })
     .catch(error => console.log(`Error while creating details of points: ${error}`));
 
@@ -40,7 +40,7 @@ router.post("/details/edit/:id", fileUploader.single('imageUrl'), (req, res) => 
     router.get("/details/delete/:id", (req, res) =>{
         const { id } = req.params;
         Point.findByIdAndRemove(id)
-        .then(() =>{res.redirect("/")
+        .then(() =>{res.redirect("/place/collections")
         })
     });
 

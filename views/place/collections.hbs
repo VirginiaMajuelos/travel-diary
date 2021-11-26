@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1 style="font-weight: 100">Colecciones de viaje</h1>
+            <h1>Colecciones de viaje</h1>
         </div>
         <div class="col-md-12">
             
             <form action="/place/collections" method="POST">
                 <div class="form-group">
                     <label for="destination-input" >Destino:</label>
-                    <input name="destination" type="text" placeholder="¿Dónde quieres ir?" class="form-control" id="destination-input">
+                    <input name="destination" type="text" placeholder="¿Dónde quieres ir?" class="form-control" id="destination-input" required>
                 </div>
                 <br>
 
@@ -26,9 +26,10 @@
                     <h5 class="card-title">{{{destination}}}</h5>
                     <p class="card-text">{{{description}}} </p>
                     <a class="btn btn-outline-dark me-2" href="/place/marker/edit/{{id}}">Edita </a> 
-                    <a class="btn btn-outline-dark me-2" href="/place/marker/delete/{{id}}">Elimina </a>
+                    <a class="btn btn-outline-dark me-2" href="/collections/delete/{{id}}">Elimina </a>
                 </div>
             </div>
         </div>
         {{/each}}
     </div>
+</div>

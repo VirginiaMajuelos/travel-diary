@@ -1,24 +1,15 @@
 
-<h1>Planifica tu viaje a {{{thePlace.destination}}}</h1>
+
 
 <div class="container">
     <div class="row">
-
         <div class="list-group col-6 ">
+            <h1 class="titulo">Planifica tu viaje a {{{thePlace.destination}}}</h1>
             <form action="/place/marker/edit/{{thePlace.id}}" method="POST">
-                <ul>
-                    <li>
-                        <input id="searchInput" class="controls" type="text" name="pointsInt" placeholder="Primera parada">
-                    </li><br>
-                    {{!-- <li>
-                        <input type="text" name="pointsInt" placeholder="Segunda parada">
-                    </li><br>
-                    <li>
-                        <input type="text" name="pointsInt" placeholder="Tercera parada">
-                    </li><br> --}}
-                </ul>
-                <input type="submit" value="Guardar Viaje">
-               
+                <p>Paradas:</p>
+                <input id="searchInput" class="controls" type="text" name="pointsInt" placeholder="Primera parada"><br><br>
+                <input class="btn btn-outline-dark me-2" type="submit" value="Añadir"><br><br>
+            </form>
         </div>
         <h2>Sitios a visitar:</h2>
         
@@ -41,5 +32,4 @@
     </div>
 
 </div>
-</form>
 

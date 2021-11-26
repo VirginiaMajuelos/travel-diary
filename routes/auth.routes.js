@@ -54,11 +54,16 @@ router.post('/login', (req, res) => {
     })
     .catch(err => console.log(err))
 })
+
 // Logout
 router.get('/logout', (req, res) => {
   req.session.destroy(() => res.redirect('/'))
+  req.app.locals.user = null
 })
+
+
 module.exports = router
+
 
 
 

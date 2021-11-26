@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const Place = require("../models/Place.model")
 const Point = require("../models/Point.model")
 const axios = require('axios');
-const { isLoggedIn, checkRoles } = require("../middlewares")
+const { isLoggedIn, checkRoles, isOwn } = require("../middlewares")
 const APIHandler =  require("./../services/APIHandler")
 const API = new APIHandler()
 
@@ -45,7 +45,7 @@ router.post("/collections", (req, res) => {
 
 //// Editar:
 
-router.get("/marker/edit/:place_id", (req, res) => {
+router.get("/marker/edit/:place_id", isLoggedIn, (req, res) => {
   const id = req.params.place_id
 
   Place.findById(id)
@@ -93,7 +93,7 @@ router.get("/api", (req, res) => {
     router.get("/marker/delete/:id", (req, res) =>{
         const { id } = req.params;
         Place.findByIdAndRemove(id)
-        .then(() =>{res.redirect("/")
+        .then(() =>{res.redirect("/place/collections/")
         })
     });
 
