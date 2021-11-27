@@ -20,6 +20,7 @@ function initMap() {
     function codeAddress() {
 
     const mapTest = document.getElementById('map')
+    console.log(mapTest)
     const destination = mapTest.className
     const points = mapTest.dataset.points.split('/')
     points.pop()
@@ -40,41 +41,49 @@ function initMap() {
     });
 
     points.forEach(point => {
-      
-        const contentString =`<div id="content">${point}</div>`;
-
-         const infowindow = new google.maps.InfoWindow({
-            content: contentString,
-          });
-
-
-        geocoder.geocode( { 'address': point}, function(results, status) {
-        if (status == 'OK') {
-        console.log(results[0])
-
-            map.setCenter(results[0].geometry.location);
-            let marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location,
-                title: results[0].formatted_address
-        });
-
-          marker.addListener("click", () => {
-            infowindow.open({
-                anchor: marker,
-                map,
-                shouldFocus: false,
-            });
-        })
         
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    });
+        setTimeout(() => {
+            
+            
+                    const contentString =`<div id="content">${point}</div>`;
+            
+                     const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                      });
+            
+                      console.log(point)
+            
+                    geocoder.geocode( { 'address': point}, function(results, status) {
+                    if (status == 'OK') {
+                    console.log(results[0])
+            
+                        map.setCenter(results[0].geometry.location);
+                        let marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: results[0].formatted_address
+                    });
+            
+                      marker.addListener("click", () => {
+                        infowindow.open({
+                            anchor: marker,
+                            map,
+                            shouldFocus: false,
+                        });
+                    })
+                    
+                  } else {
+                    alert('Geocode was not successful for the following reasona: ' + status);
+                  }
+                });
+        }, 300);
     })
   }
 
-  codeAddress()
+  google.maps.event.addListenerOnce(map, 'idle', function(){
+   codeAddress()
+});
+
 
     autocomplete.addListener('place_changed', function() {
         infowindow.close();

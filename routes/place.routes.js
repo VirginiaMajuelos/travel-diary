@@ -45,7 +45,7 @@ router.post("/collections", (req, res) => {
 
 //// Editar:
 
-router.get("/marker/edit/:place_id", isLoggedIn, (req, res) => {
+router.get("/marker/edit/:place_id", (req, res) => {
   const id = req.params.place_id
 
   Place.findById(id)

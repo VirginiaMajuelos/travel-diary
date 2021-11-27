@@ -26,6 +26,7 @@ const projectName = "Your-Road";
 const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
 
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`;
+app.locals.MAPS_KEY=process.env.MAPS_KEY
 
 // 👇 Start handling routes here
 
