@@ -1,11 +1,15 @@
 # Your-Road
 
-Website about travel:
+<h2>Travel diary, where you can</h2>
 
-Travel diary, where you can
+<img width="150" src="https://i.imgur.com/uQdiFSN.png">
+
+<br><br>
 
 <ul>
-<li>Planification</li>
+<li>Travel planning.</li>
+<li>Create your points of interest and see them on a map.</li>
+    <li>Add comments, photos, tips in the points while you're traveling.</li>
 </ul>
 
 | Route                          | HTTP Verb | Description        |
